@@ -14,3 +14,9 @@ model Client {
   password String
   cnpj     String
 }
+
+model Produto {
+  id         String  @id @default(uuid())
+  produto    String
+  preco      Float
+}
