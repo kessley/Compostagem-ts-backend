@@ -1,5 +1,7 @@
+// prisma/schema.prisma
+
 datasource db {
-  provider = "sqlite"
+  provider = "sqlite" // ou "postgresql", conforme sua configuração
   url      = env("DATABASE_URL")
 }
 
@@ -8,15 +10,30 @@ generator client {
 }
 
 model Client {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
   address  String
   password String
   cnpj     String
+  // Relação: um Client pode ter vários pedidos
+  ordemPedidos OrdemPedido[]
 }
 
 model Produto {
   id         String  @id @default(uuid())
   produto    String
   preco      Float
+  // Relação: um Produto pode estar em vários pedidos
+  ordemPedidos OrdemPedido[]
+}
+
+model OrdemPedido {
+  id         String  @id @default(uuid())
+  clientId   String
+  produtoId  String
+  valorTotal Float
+  totalItens Int
+
+  client  Client  @relation(fields: [clientId], references: [id])
+  produto Produto @relation(fields: [produtoId], references: [id])
 }

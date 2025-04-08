@@ -8,7 +8,6 @@ export class Client {
       public cnpj: string
     ) {}
   
-    // Exemplo de método de domínio
     updateData(name: string, address: string, password: string, cnpj: string) {
       this.name = name;
       this.address = address;
