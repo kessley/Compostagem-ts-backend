@@ -23,20 +23,24 @@ export class ClientController {
     }
   }
 
-  async getByName(req: Request, res: Response): Promise<Response> {
-    const { name } = req.params;
-    const clientRepository = ClientRepositoryFactory.create();
-    const useCase = new GetClientByNameUseCase(clientRepository);
+  async getByName(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { name } = req.params;
+      const clientRepository = ClientRepositoryFactory.create();
+      const useCase = new GetClientByNameUseCase(clientRepository);
   
-    // Passando a string diretamente
-    const client = await useCase.execute(name);
+      const client = await useCase.execute(name);
   
-    if (!client) {
-      return res.status(404).json({ message: 'Cliente não encontrado' });
+      if (!client) {
+        res.status(404).json({ message: 'Cliente não encontrado' });
+      } else {
+        res.status(200).json(client);
+      }
+    } catch (error) {
+      next(error);
     }
-  
-    return res.json(client);
   }
+  
   
   
   

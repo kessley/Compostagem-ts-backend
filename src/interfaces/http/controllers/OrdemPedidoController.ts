@@ -5,7 +5,8 @@ import {
   GetOrdemPedidoUseCase,
   GetAllOrdemPedidosUseCase,
   UpdateOrdemPedidoUseCase,
-  DeleteOrdemPedidoUseCase
+  DeleteOrdemPedidoUseCase,
+  GetOrdersByClientUseCase
 } from '../../../application/use-cases/ordemPedidoUseCase';
 import { OrdemPedidoRepositoryFactory } from '../../../infrastructure/factories/OrdemPedidoRepositoryFactory';
 
@@ -21,6 +22,19 @@ export class OrdemPedidoController {
       next(error);
     }
   }
+
+  async getByClient(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { clientId } = req.params;
+      const ordemPedidoRepository = OrdemPedidoRepositoryFactory.create();
+      const getOrdersByClientUseCase = new GetOrdersByClientUseCase(ordemPedidoRepository);
+      const orders = await getOrdersByClientUseCase.execute(clientId);
+      res.status(200).json(orders);
+    } catch (error) {
+      next(error);
+    }
+  }
+  
 
   async get(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

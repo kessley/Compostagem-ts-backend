@@ -29,5 +29,6 @@ router.get('/ordem-pedidos', ordemPedidoController.getAll.bind(ordemPedidoContro
 router.get('/ordem-pedidos/:id', ordemPedidoController.get.bind(ordemPedidoController));
 router.put('/ordem-pedidos/:id', ordemPedidoController.update.bind(ordemPedidoController));
 router.delete('/ordem-pedidos/:id', ordemPedidoController.delete.bind(ordemPedidoController));
+router.get('/ordem-pedidos/by-client/:clientId', ordemPedidoController.getByClient.bind(ordemPedidoController));
 
 export default router;
