@@ -13,7 +13,7 @@ export class ClientRepository implements IClientRepository {
         name: client.name,
         address: client.address,
         password: client.password,
-        cnpj: client.cnpj,
+        cpf: client.cpf,
       },
     });
     return new Client(
@@ -21,9 +21,23 @@ export class ClientRepository implements IClientRepository {
       record.name,
       record.address,
       record.password,
-      record.cnpj
+      record.cpf
     );
   }
+  async findByName(name: string): Promise<Client | null> {
+    const record = await prisma.client.findFirst({
+      where: { name },
+    });
+    if (!record) return null;
+    return new Client(
+      record.id,
+      record.name,
+      record.address,
+      record.password,
+      record.cpf
+    );
+  }
+  
 
   async findById(id: string): Promise<Client | null> {
     const record = await prisma.client.findUnique({ where: { id } });
@@ -34,7 +48,7 @@ export class ClientRepository implements IClientRepository {
       record.name,
       record.address,
       record.password,
-      record.cnpj
+      record.cpf
     );
   }
 
@@ -45,7 +59,7 @@ export class ClientRepository implements IClientRepository {
         name: client.name,
         address: client.address,
         password: client.password,
-        cnpj: client.cnpj,
+        cpf: client.cpf,
       },
     });
   }
@@ -57,14 +71,17 @@ export class ClientRepository implements IClientRepository {
   async findAll(): Promise<Client[]> {
     const records = await prisma.client.findMany();
     return records.map(
-      (record: { id: string; name: string; address: string; password: string; cnpj: string }) =>
+      (record: { id: string; name: string; address: string; password: string; cpf: string }) =>
         new Client(
           record.id,
           record.name,
           record.address,
           record.password,
-          record.cnpj
+          record.cpf
         )
     );
+
+    
   }
+  
 }

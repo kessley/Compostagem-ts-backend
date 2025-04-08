@@ -6,7 +6,7 @@ interface UpdateClientDTO {
   name?: string;
   address?: string;
   password?: string;
-  cnpj?: string;
+  cpf?: string;
 }
 
 export class UpdateClientUseCase {
@@ -22,7 +22,7 @@ export class UpdateClientUseCase {
     if (data.name) client.name = data.name;
     if (data.address) client.address = data.address;
     if (data.password) client.password = data.password;
-    if (data.cnpj) client.cnpj = data.cnpj;
+    if (data.cpf) client.cpf = data.cpf;
 
     await this.clientRepository.update(client);
     return client;

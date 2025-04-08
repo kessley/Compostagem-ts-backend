@@ -14,6 +14,7 @@ router.get('/clients', clientController.getAll.bind(clientController));
 router.get('/clients/:id', clientController.get.bind(clientController));
 router.put('/clients/:id', clientController.update.bind(clientController));
 router.delete('/clients/:id', clientController.delete.bind(clientController));
+router.get('/clients/by-name/:name', clientController.getByName.bind(clientController));
 
 // Rotas para Produto
 router.post('/produtos', produtoController.create.bind(produtoController));

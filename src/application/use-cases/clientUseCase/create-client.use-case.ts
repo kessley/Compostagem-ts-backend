@@ -8,7 +8,7 @@ interface CreateClientDTO {
   name: string;
   address: string;
   password: string;
-  cnpj: string;
+  cpf: string;
 }
 
 export class CreateClientUseCase {
@@ -19,7 +19,7 @@ export class CreateClientUseCase {
     const id = uuidv4();
 
     // Cria a entidade com o id gerado
-    const client = new Client(id, data.name, data.address, data.password, data.cnpj);
+    const client = new Client(id, data.name, data.address, data.password, data.cpf);
 
     await this.clientRepository.create(client);
 

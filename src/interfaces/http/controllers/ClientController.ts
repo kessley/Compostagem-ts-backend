@@ -5,22 +5,41 @@ import {
   GetClientUseCase, 
   GetAllClientsUseCase, 
   UpdateClientUseCase, 
-  DeleteClientUseCase 
+  DeleteClientUseCase,
+  GetClientByNameUseCase
 } from '../../../application/use-cases/clientUseCase';
 import { ClientRepositoryFactory } from '../../../infrastructure/factories/ClientRepositoryFactory';
 
 export class ClientController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { name, address, password, cnpj } = req.body;
+      const { name, address, password, cpf } = req.body;
       const clientRepository = ClientRepositoryFactory.create();
       const createClientUseCase = new CreateClientUseCase(clientRepository);
-      const client = await createClientUseCase.execute({ name, address, password, cnpj });
+      const client = await createClientUseCase.execute({ name, address, password, cpf });
       res.status(201).json({ message: 'Cliente criado com sucesso!', client });
     } catch (error) {
       next(error);
     }
   }
+
+  async getByName(req: Request, res: Response): Promise<Response> {
+    const { name } = req.params;
+    const clientRepository = ClientRepositoryFactory.create();
+    const useCase = new GetClientByNameUseCase(clientRepository);
+  
+    // Passando a string diretamente
+    const client = await useCase.execute(name);
+  
+    if (!client) {
+      return res.status(404).json({ message: 'Cliente não encontrado' });
+    }
+  
+    return res.json(client);
+  }
+  
+  
+  
   
   async get(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
@@ -52,10 +71,10 @@ export class ClientController {
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
-      const { name, address, password, cnpj } = req.body;
+      const { name, address, password, cpf } = req.body;
       const clientRepository = ClientRepositoryFactory.create();
       const updateClientUseCase = new UpdateClientUseCase(clientRepository);
-      const client = await updateClientUseCase.execute({ id, name, address, password, cnpj });
+      const client = await updateClientUseCase.execute({ id, name, address, password, cpf });
       if (!client) {
         res.status(404).json({ message: 'Cliente não encontrado' });
       } else {
@@ -78,3 +97,4 @@ export class ClientController {
     }
   }
 }
+

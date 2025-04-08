@@ -14,7 +14,7 @@ model Client {
   name     String
   address  String
   password String
-  cnpj     String
+  cpf     String
   // Relação: um Client pode ter vários pedidos
   ordemPedidos OrdemPedido[]
 }

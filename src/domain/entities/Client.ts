@@ -5,14 +5,14 @@ export class Client {
       public name: string,
       public address: string,
       public password: string,
-      public cnpj: string
+      public cpf: string
     ) {}
   
-    updateData(name: string, address: string, password: string, cnpj: string) {
+    updateData(name: string, address: string, password: string, cpf: string) {
       this.name = name;
       this.address = address;
       this.password = password;
-      this.cnpj = cnpj;
+      this.cpf = cpf;
     }
   }
   
