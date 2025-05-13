@@ -9,26 +9,45 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Client {
-  id       String  @id @default(uuid())
-  name     String
-  address  String
+model Admin {
+  id       String @id @default(uuid())
+  name     String @unique
   password String
-  cpf     String
+}
+
+model Client {
+  id           String        @id @default(uuid())
+  name         String
+  address      String
+  password     String
+  cpf          String
   // Relação: um Client pode ter vários pedidos
   ordemPedidos OrdemPedido[]
 }
 
+model Fornecedor {
+  id          String @id @default(uuid())
+  nome        String
+  cnpj        String @unique
+  senha       String
+  endereco    String
+  razaoSocial String
+  segmento    String
+
+  Requisicao Requisicao[]
+}
+
 model Produto {
-  id         String  @id @default(uuid())
-  produto    String
-  preco      Float
-  // Relação: um Produto pode estar em vários pedidos
+  id           String        @id @default(uuid())
+  produto      String
+  preco        Float
+  tipo         String // novo campo
   ordemPedidos OrdemPedido[]
+  Requisicao   Requisicao[]
 }
 
 model OrdemPedido {
-  id         String  @id @default(uuid())
+  id         String @id @default(uuid())
   clientId   String
   produtoId  String
   valorTotal Float
@@ -36,4 +55,21 @@ model OrdemPedido {
 
   client  Client  @relation(fields: [clientId], references: [id])
   produto Produto @relation(fields: [produtoId], references: [id])
+}
+
+enum RequisicaoStatus {
+  PENDENTE
+  CONFIRMADO
+  CONCLUIDO
+}
+
+model Requisicao {
+  id           String           @id @default(uuid())
+  fornecedorId String
+  produtoId    String
+  date         DateTime? // será preenchido pelo admin
+  status       RequisicaoStatus @default(PENDENTE)
+
+  fornecedor Fornecedor @relation(fields: [fornecedorId], references: [id])
+  produto    Produto    @relation(fields: [produtoId], references: [id])
 }

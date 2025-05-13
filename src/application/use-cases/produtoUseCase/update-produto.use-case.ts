@@ -1,24 +1,21 @@
-// src/application/use-cases/produtoUseCase/update-produto.use-case.ts
 import { IProdutoRepository } from '../../../domain/interfaces/IProdutoRepository';
 import { Produto } from '../../../domain/entities/Produto';
 
-interface UpdateProdutoDTO {
+export interface UpdateProdutoDTO {
   id: string;
-  produto?: string;
-  preco?: number;
+  produto: string;
+  preco: number;
+  tipo: string;           // incluir tipo
 }
 
 export class UpdateProdutoUseCase {
-  constructor(private produtoRepository: IProdutoRepository) {}
+  constructor(private repo: IProdutoRepository) {}
 
   async execute(data: UpdateProdutoDTO): Promise<Produto | null> {
-    const produto = await this.produtoRepository.findById(data.id);
-    if (!produto) return null;
-
-    if (data.produto) produto.produto = data.produto;
-    if (data.preco !== undefined) produto.preco = data.preco;
-
-    await this.produtoRepository.update(produto);
-    return produto;
+    const existing = await this.repo.findById(data.id);
+    if (!existing) return null;
+    existing.updateData(data.produto, data.preco, data.tipo);
+    await this.repo.update(existing);
+    return existing;
   }
 }

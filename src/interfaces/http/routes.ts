@@ -2,12 +2,16 @@ import { Router } from 'express';
 import { ClientController } from './controllers/ClientController';
 import { ProdutoController } from './controllers/ProdutoController';
 import { OrdemPedidoController } from './controllers/OrdemPedidoController';
-
+import { FornecedorController } from './controllers/FornecedorController';
+import { AdminController } from './controllers/AdminController';
+import { RequisicaoController } from './controllers/RequisicaoController';
 const router = Router();
 const clientController = new ClientController();
 const produtoController = new ProdutoController();
 const ordemPedidoController = new OrdemPedidoController();
-
+const fornecedorController = new FornecedorController();
+const adminController = new AdminController();
+const requisicaoController = new RequisicaoController();
 // Rotas para Client
 router.post('/clients', clientController.create.bind(clientController));
 router.get('/clients', clientController.getAll.bind(clientController));
@@ -30,5 +34,27 @@ router.get('/ordem-pedidos/:id', ordemPedidoController.get.bind(ordemPedidoContr
 router.put('/ordem-pedidos/:id', ordemPedidoController.update.bind(ordemPedidoController));
 router.delete('/ordem-pedidos/:id', ordemPedidoController.delete.bind(ordemPedidoController));
 router.get('/ordem-pedidos/by-client/:clientId', ordemPedidoController.getByClient.bind(ordemPedidoController));
+
+
+router.post('/fornecedores', fornecedorController.create.bind(fornecedorController));
+router.get('/fornecedores', fornecedorController.getAll.bind(fornecedorController));
+router.get('/fornecedores/:id', fornecedorController.get.bind(fornecedorController));
+router.put('/fornecedores/:id', fornecedorController.update.bind(fornecedorController));
+router.delete('/fornecedores/:id', fornecedorController.delete.bind(fornecedorController));
+
+// Rotas para Admin
+router.post('/admins', adminController.create.bind(adminController));
+router.get('/admins', adminController.getAll.bind(adminController));
+router.get('/admins/:id', adminController.get.bind(adminController));
+router.put('/admins/:id', adminController.update.bind(adminController));
+router.delete('/admins/:id', adminController.delete.bind(adminController));
+router.get('/admins/by-name/:name', adminController.getByName.bind(adminController));
+
+router.post('/requisicoes',requisicaoController.create.bind(requisicaoController));
+router.get('/requisicoes',requisicaoController.getAll.bind(requisicaoController));
+router.get('/requisicoes/:id',requisicaoController.get.bind(requisicaoController));
+router.put('/requisicoes/:id/confirmar',requisicaoController.confirmarColeta.bind(requisicaoController));
+router.delete('/requisicoes/:id',requisicaoController.delete.bind(requisicaoController));
+
 
 export default router;

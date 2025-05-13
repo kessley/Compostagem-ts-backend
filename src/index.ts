@@ -7,7 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(router); // aqui sim, passando o Router, e não uma função de controller
+app.use(router);
 
 app.listen(serverConfig.port, () => {
   console.log(`Server running on port ${serverConfig.port}`);
