@@ -7,6 +7,7 @@ import {
   GetAllFornecedoresUseCase,
   UpdateFornecedorUseCase,
   DeleteFornecedorUseCase,
+  GetFornecedorByNameUseCase,
 } from '../../../application/use-cases/fornecedorUseCase';
 import { FornecedorRepositoryFactory } from '../../../infrastructure/factories/FornecedorRepositoryFactory';
 
@@ -85,4 +86,22 @@ export class FornecedorController {
       next(error);
     }
   }
+
+  // LOGIN / busca por nome
+  async getByName(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { name } = req.params;
+      const repo = FornecedorRepositoryFactory.create();
+      const uc = new GetFornecedorByNameUseCase(repo);
+      const fornecedor = await uc.execute(name);
+      if (!fornecedor) {
+        res.status(404).json({ message: 'Fornecedor não encontrado' });
+      } else {
+        res.status(200).json(fornecedor);
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
 }

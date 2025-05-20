@@ -3,8 +3,8 @@ import { Admin } from '../../../domain/entities/Admin';
 
 export interface UpdateAdminDTO {
   id: string;
-  name: string;
-  password: string;
+  nome: string;
+  senha: string;
 }
 
 export class UpdateAdminUseCase {
@@ -13,7 +13,7 @@ export class UpdateAdminUseCase {
   async execute(data: UpdateAdminDTO): Promise<Admin | null> {
     const existing = await this.repo.findById(data.id);
     if (!existing) return null;
-    existing.updateData(data.name, data.password);
+    existing.updateData(data.nome, data.senha);
     await this.repo.update(existing);
     return existing;
   }

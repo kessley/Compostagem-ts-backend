@@ -1,16 +1,16 @@
 -- CreateTable
 CREATE TABLE "Admin" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "password" TEXT NOT NULL
+    "nome" TEXT NOT NULL,
+    "senha" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Client" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+    "nome" TEXT NOT NULL,
+    "endereco" TEXT NOT NULL,
+    "senha" TEXT NOT NULL,
     "cpf" TEXT NOT NULL
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE "Requisicao" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Admin_name_key" ON "Admin"("name");
+CREATE UNIQUE INDEX "Admin_nome_key" ON "Admin"("nome");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Fornecedor_cnpj_key" ON "Fornecedor"("cnpj");

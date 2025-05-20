@@ -41,6 +41,7 @@ router.get('/fornecedores', fornecedorController.getAll.bind(fornecedorControlle
 router.get('/fornecedores/:id', fornecedorController.get.bind(fornecedorController));
 router.put('/fornecedores/:id', fornecedorController.update.bind(fornecedorController));
 router.delete('/fornecedores/:id', fornecedorController.delete.bind(fornecedorController));
+router.get('/fornecedores/by-name/:name',fornecedorController.getByName.bind(fornecedorController));
 
 // Rotas para Admin
 router.post('/admins', adminController.create.bind(adminController));
@@ -55,6 +56,7 @@ router.get('/requisicoes',requisicaoController.getAll.bind(requisicaoController)
 router.get('/requisicoes/:id',requisicaoController.get.bind(requisicaoController));
 router.put('/requisicoes/:id/confirmar',requisicaoController.confirmarColeta.bind(requisicaoController));
 router.delete('/requisicoes/:id',requisicaoController.delete.bind(requisicaoController));
+
 
 
 export default router;

@@ -5,9 +5,9 @@ import { Client } from '../../../domain/entities/Client';
 import { v4 as uuidv4 } from 'uuid';
 
 interface CreateClientDTO {
-  name: string;
-  address: string;
-  password: string;
+  nome: string;
+  endereco: string;
+  senha: string;
   cpf: string;
 }
 
@@ -19,7 +19,7 @@ export class CreateClientUseCase {
     const id = uuidv4();
 
     // Cria a entidade com o id gerado
-    const client = new Client(id, data.name, data.address, data.password, data.cpf);
+    const client = new Client(id, data.nome, data.endereco, data.senha, data.cpf);
 
     await this.clientRepository.create(client);
 

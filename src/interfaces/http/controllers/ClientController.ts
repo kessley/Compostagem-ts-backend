@@ -13,10 +13,10 @@ import { ClientRepositoryFactory } from '../../../infrastructure/factories/Clien
 export class ClientController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { name, address, password, cpf } = req.body;
+      const { nome, endereco, senha, cpf } = req.body;
       const clientRepository = ClientRepositoryFactory.create();
       const createClientUseCase = new CreateClientUseCase(clientRepository);
-      const client = await createClientUseCase.execute({ name, address, password, cpf });
+      const client = await createClientUseCase.execute({ nome, endereco, senha, cpf });
       res.status(201).json({ message: 'Cliente criado com sucesso!', client });
     } catch (error) {
       next(error);
@@ -25,11 +25,11 @@ export class ClientController {
 
   async getByName(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { name } = req.params;
+      const { nome } = req.params;
       const clientRepository = ClientRepositoryFactory.create();
       const useCase = new GetClientByNameUseCase(clientRepository);
   
-      const client = await useCase.execute(name);
+      const client = await useCase.execute(nome);
   
       if (!client) {
         res.status(404).json({ message: 'Cliente não encontrado' });
@@ -75,10 +75,10 @@ export class ClientController {
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
-      const { name, address, password, cpf } = req.body;
+      const { nome, endereco, senha, cpf } = req.body;
       const clientRepository = ClientRepositoryFactory.create();
       const updateClientUseCase = new UpdateClientUseCase(clientRepository);
-      const client = await updateClientUseCase.execute({ id, name, address, password, cpf });
+      const client = await updateClientUseCase.execute({ id, nome, endereco, senha, cpf });
       if (!client) {
         res.status(404).json({ message: 'Cliente não encontrado' });
       } else {

@@ -89,4 +89,18 @@ export class FornecedorRepository implements IFornecedorRepository {
   async delete(id: string): Promise<void> {
     await prisma.fornecedor.delete({ where: { id } });
   }
+
+  async findByName(nome: string): Promise<Fornecedor | null> {
+    const rec = await prisma.fornecedor.findFirst({ where: { nome } });
+    if (!rec) return null;
+    return new Fornecedor(
+      rec.id,
+      rec.nome,
+      rec.cnpj,
+      rec.senha,
+      rec.endereco,
+      rec.razaoSocial,
+      rec.segmento
+    );
+  }
 }

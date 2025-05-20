@@ -7,4 +7,5 @@ export interface IFornecedorRepository {
   findByCnpj(cnpj: string): Promise<Fornecedor | null>;
   update(f: Fornecedor): Promise<void>;
   delete(id: string): Promise<void>;
+  findByName(nome: string): Promise<Fornecedor | null>;
 }

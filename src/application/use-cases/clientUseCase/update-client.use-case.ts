@@ -3,9 +3,9 @@ import { Client } from '../../../domain/entities/Client';
 
 interface UpdateClientDTO {
   id: string;
-  name?: string;
-  address?: string;
-  password?: string;
+  nome?: string;
+  endereco?: string;
+  senha?: string;
   cpf?: string;
 }
 
@@ -19,9 +19,9 @@ export class UpdateClientUseCase {
     }
     
     // Atualiza os campos se fornecidos
-    if (data.name) client.name = data.name;
-    if (data.address) client.address = data.address;
-    if (data.password) client.password = data.password;
+    if (data.nome) client.nome = data.nome;
+    if (data.endereco) client.endereco = data.endereco;
+    if (data.senha) client.senha = data.senha;
     if (data.cpf) client.cpf = data.cpf;
 
     await this.clientRepository.update(client);

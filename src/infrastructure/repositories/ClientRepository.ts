@@ -10,30 +10,30 @@ export class ClientRepository implements IClientRepository {
     const record = await prisma.client.create({
       data: {
         id: client.id,
-        name: client.name,
-        address: client.address,
-        password: client.password,
+        nome: client.nome,
+        endereco: client.endereco,
+        senha: client.senha,
         cpf: client.cpf,
       },
     });
     return new Client(
       record.id,
-      record.name,
-      record.address,
-      record.password,
+      record.nome,
+      record.endereco,
+      record.senha,
       record.cpf
     );
   }
-  async findByName(name: string): Promise<Client | null> {
+  async findByName(nome: string): Promise<Client | null> {
     const record = await prisma.client.findFirst({
-      where: { name },
+      where: { nome },
     });
     if (!record) return null;
     return new Client(
       record.id,
-      record.name,
-      record.address,
-      record.password,
+      record.nome,
+      record.endereco,
+      record.senha,
       record.cpf
     );
   }
@@ -45,9 +45,9 @@ export class ClientRepository implements IClientRepository {
 
     return new Client(
       record.id,
-      record.name,
-      record.address,
-      record.password,
+      record.nome,
+      record.endereco,
+      record.senha,
       record.cpf
     );
   }
@@ -56,9 +56,9 @@ export class ClientRepository implements IClientRepository {
     await prisma.client.update({
       where: { id: client.id },
       data: {
-        name: client.name,
-        address: client.address,
-        password: client.password,
+        nome: client.nome,
+        endereco: client.endereco,
+        senha: client.senha,
         cpf: client.cpf,
       },
     });
@@ -71,12 +71,12 @@ export class ClientRepository implements IClientRepository {
   async findAll(): Promise<Client[]> {
     const records = await prisma.client.findMany();
     return records.map(
-      (record: { id: string; name: string; address: string; password: string; cpf: string }) =>
+      (record: { id: string; nome: string; endereco: string; senha: string; cpf: string }) =>
         new Client(
           record.id,
-          record.name,
-          record.address,
-          record.password,
+          record.nome,
+          record.endereco,
+          record.senha,
           record.cpf
         )
     );

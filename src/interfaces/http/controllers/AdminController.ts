@@ -12,10 +12,10 @@ import { AdminRepositoryFactory } from '../../../infrastructure/factories/AdminR
 export class AdminController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { name, password } = req.body;
+      const { nome, senha } = req.body;
       const repo = AdminRepositoryFactory.create();
       const uc = new CreateAdminUseCase(repo);
-      const admin = await uc.execute({ name, password });
+      const admin = await uc.execute({ nome, senha });
       res.status(201).json({ message: 'Admin criado com sucesso!', admin });
     } catch (error) {
       next(error);
@@ -24,10 +24,10 @@ export class AdminController {
 
   async getByName(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { name } = req.params;
+      const { nome } = req.params;
       const repo = AdminRepositoryFactory.create();
       const uc = new GetAdminByNameUseCase(repo);
-      const admin = await uc.execute(name);
+      const admin = await uc.execute(nome);
       if (!admin) {
         res.status(404).json({ message: 'Admin não encontrado' });
       } else {
@@ -68,10 +68,10 @@ export class AdminController {
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
-      const { name, password } = req.body;
+      const { nome, senha } = req.body;
       const repo = AdminRepositoryFactory.create();
       const uc = new UpdateAdminUseCase(repo);
-      const admin = await uc.execute({ id, name, password });
+      const admin = await uc.execute({ id, nome, senha });
       if (!admin) {
         res.status(404).json({ message: 'Admin não encontrado' });
       } else {

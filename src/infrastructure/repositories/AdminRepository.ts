@@ -10,33 +10,33 @@ export class AdminRepository implements IAdminRepository {
     const record = await prisma.admin.create({
       data: {
         id: admin.id,
-        name: admin.name,
-        password: admin.password,
+        nome: admin.nome,
+        senha: admin.senha,
       },
     });
-    return new Admin(record.id, record.name, record.password);
+    return new Admin(record.id, record.nome, record.senha);
   }
 
-  async findByName(name: string): Promise<Admin | null> {
+  async findByName(nome: string): Promise<Admin | null> {
     const record = await prisma.admin.findUnique({
-      where: { name },
+      where: { nome },
     });
     if (!record) return null;
-    return new Admin(record.id, record.name, record.password);
+    return new Admin(record.id, record.nome, record.senha);
   }
 
   async findById(id: string): Promise<Admin | null> {
     const record = await prisma.admin.findUnique({ where: { id } });
     if (!record) return null;
-    return new Admin(record.id, record.name, record.password);
+    return new Admin(record.id, record.nome, record.senha);
   }
 
   async update(admin: Admin): Promise<void> {
     await prisma.admin.update({
       where: { id: admin.id },
       data: {
-        name: admin.name,
-        password: admin.password,
+        nome: admin.nome,
+        senha: admin.senha,
       },
     });
   }
@@ -48,7 +48,7 @@ export class AdminRepository implements IAdminRepository {
   async findAll(): Promise<Admin[]> {
     const records = await prisma.admin.findMany();
     return records.map(record =>
-      new Admin(record.id, record.name, record.password)
+      new Admin(record.id, record.nome, record.senha)
     );
   }
 }

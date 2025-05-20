@@ -2,16 +2,16 @@
 export class Client {
     constructor(
       public readonly id: string,
-      public name: string,
-      public address: string,
-      public password: string,
+      public nome: string,
+      public endereco: string,
+      public senha: string,
       public cpf: string
     ) {}
   
     updateData(name: string, address: string, password: string, cpf: string) {
-      this.name = name;
-      this.address = address;
-      this.password = password;
+      this.nome = name;
+      this.endereco = address;
+      this.senha = password;
       this.cpf = cpf;
     }
   }

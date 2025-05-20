@@ -11,15 +11,15 @@ generator client {
 
 model Admin {
   id       String @id @default(uuid())
-  name     String @unique
-  password String
+  nome     String @unique
+  senha String
 }
 
 model Client {
   id           String        @id @default(uuid())
-  name         String
-  address      String
-  password     String
+  nome         String
+  endereco      String
+  senha     String
   cpf          String
   // Relação: um Client pode ter vários pedidos
   ordemPedidos OrdemPedido[]
