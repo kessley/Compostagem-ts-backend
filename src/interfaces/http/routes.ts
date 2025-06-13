@@ -18,7 +18,7 @@ router.get('/clients', clientController.getAll.bind(clientController));
 router.get('/clients/:id', clientController.get.bind(clientController));
 router.put('/clients/:id', clientController.update.bind(clientController));
 router.delete('/clients/:id', clientController.delete.bind(clientController));
-router.get('/clients/by-name/:name', clientController.getByName.bind(clientController));
+router.get('/clients/by-name/:nome', clientController.getByName.bind(clientController));
 
 // Rotas para Produto
 router.post('/produtos', produtoController.create.bind(produtoController));
@@ -41,7 +41,7 @@ router.get('/fornecedores', fornecedorController.getAll.bind(fornecedorControlle
 router.get('/fornecedores/:id', fornecedorController.get.bind(fornecedorController));
 router.put('/fornecedores/:id', fornecedorController.update.bind(fornecedorController));
 router.delete('/fornecedores/:id', fornecedorController.delete.bind(fornecedorController));
-router.get('/fornecedores/by-name/:name',fornecedorController.getByName.bind(fornecedorController));
+router.get('/fornecedores/by-name/:nome',fornecedorController.getByName.bind(fornecedorController));
 
 // Rotas para Admin
 router.post('/admins', adminController.create.bind(adminController));
@@ -49,7 +49,7 @@ router.get('/admins', adminController.getAll.bind(adminController));
 router.get('/admins/:id', adminController.get.bind(adminController));
 router.put('/admins/:id', adminController.update.bind(adminController));
 router.delete('/admins/:id', adminController.delete.bind(adminController));
-router.get('/admins/by-name/:name', adminController.getByName.bind(adminController));
+router.get('/admins/by-name/:nome', adminController.getByName.bind(adminController));
 
 router.post('/requisicoes',requisicaoController.create.bind(requisicaoController));
 router.get('/requisicoes',requisicaoController.getAll.bind(requisicaoController));

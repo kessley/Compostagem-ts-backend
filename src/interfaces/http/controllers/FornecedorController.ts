@@ -1,6 +1,5 @@
 // src/interfaces/http/controllers/FornecedorController.ts
 import { Request, Response, NextFunction } from 'express';
-// importe todos os use cases a partir do barrel
 import {
   CreateFornecedorUseCase,
   GetFornecedorUseCase,
@@ -90,10 +89,10 @@ export class FornecedorController {
   // LOGIN / busca por nome
   async getByName(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { name } = req.params;
+      const { nome } = req.params;
       const repo = FornecedorRepositoryFactory.create();
       const uc = new GetFornecedorByNameUseCase(repo);
-      const fornecedor = await uc.execute(name);
+      const fornecedor = await uc.execute(nome);
       if (!fornecedor) {
         res.status(404).json({ message: 'Fornecedor não encontrado' });
       } else {

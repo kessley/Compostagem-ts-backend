@@ -1,3 +1,5 @@
+//src\infrastructure\repositories\FornecedorRepository.ts
+
 import { PrismaClient } from '@prisma/client';
 import { Fornecedor } from '../../domain/entities/Fornecedor';
 import { IFornecedorRepository } from '../../domain/interfaces/IFornecedorRepository';

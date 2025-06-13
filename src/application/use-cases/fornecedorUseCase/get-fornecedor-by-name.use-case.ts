@@ -1,3 +1,4 @@
+// src\application\use-cases\fornecedorUseCase\get-fornecedor-by-name.use-case.ts
 import { IFornecedorRepository } from '../../../domain/interfaces/IFornecedorRepository';
 import { Fornecedor } from '../../../domain/entities/Fornecedor';
 
