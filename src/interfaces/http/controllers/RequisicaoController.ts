@@ -8,6 +8,7 @@ import {
   DeleteRequisicaoUseCase
 } from '../../../application/use-cases/requisicaoUseCase';
 import { RequisicaoRepositoryFactory } from '../../../infrastructure/factories/RequisicaoRepositoryFactory';
+import { RequisicaoComInfoDTO } from '../../../application/use-cases/dtos/requisicao.dto';
 
 export class RequisicaoController {
   // 1) Criação: fornecedor passa date
@@ -48,11 +49,36 @@ export class RequisicaoController {
 
   // 3) Listagem geral
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const repo = RequisicaoRepositoryFactory.create();
+    const uc   = new GetAllRequisicoesUseCase(repo);
+    const lista: RequisicaoComInfoDTO[] = await uc.execute();
+    res.status(200).json(lista);
+  } catch (err) {
+    next(err);
+  }
+}
+  async recusarRequisicao(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     try {
+      const { id } = req.params;
       const repo = RequisicaoRepositoryFactory.create();
-      const uc = new GetAllRequisicoesUseCase(repo);
-      const list = await uc.execute();
-      res.status(200).json(list);
+      const uc   = new UpdateRequisicaoUseCase(repo);
+      const updated = await uc.execute({
+        id,
+        date:   null, 
+        status: 'RECUSADO'    // usa o novo enum
+      });
+      if (!updated) {
+        res.status(404).json({ message: 'Requisição não encontrada' });
+        return;
+      }
+      res
+        .status(200)
+        .json({ message: 'Requisição recusada com sucesso!', requisicao: updated });
     } catch (err) {
       next(err);
     }

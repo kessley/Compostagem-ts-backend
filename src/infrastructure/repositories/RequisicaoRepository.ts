@@ -2,6 +2,8 @@
 import { PrismaClient } from '@prisma/client';
 import { Requisicao } from '../../domain/entities/Requisicao';
 import { IRequisicaoRepository } from '../../domain/interfaces/IRequisicaoRepository';
+import { RequisicaoComInfoDTO } from '../../application/use-cases/dtos/requisicao.dto';
+
 
 const prisma = new PrismaClient();
 
@@ -20,14 +22,38 @@ export class RequisicaoRepository implements IRequisicaoRepository {
   }
 
   async findById(id: string): Promise<Requisicao | null> {
-    const rec = await prisma.requisicao.findUnique({ where: { id } });
-    if (!rec) return null;
-    return new Requisicao(rec.id, rec.fornecedorId, rec.produtoId, rec.date, rec.status);
+    // se quiser, pode fazer o mesmo include aqui também
+    const r = await prisma.requisicao.findUnique({
+      where: { id },
+      include: {
+        fornecedor: { select: { nome: true } },
+        produto:    { select: { produto: true } },
+      }
+    });
+    if (!r) return null;
+    return Object.assign(
+      new Requisicao(r.id, r.fornecedorId, r.produtoId, r.date, r.status),
+      { fornecedorNome: r.fornecedor.nome, produtoNome: r.produto.produto }
+    );
   }
 
-  async findAll(): Promise<Requisicao[]> {
-    const recs = await prisma.requisicao.findMany();
-    return recs.map(r => new Requisicao(r.id, r.fornecedorId, r.produtoId, r.date, r.status));
+  async findAll(): Promise<RequisicaoComInfoDTO[]> {
+    const recs = await prisma.requisicao.findMany({
+      include: {
+        fornecedor: { select: { nome: true } },
+        produto:    { select: { produto: true } },
+      },
+    });
+
+    return recs.map(r => ({
+      id:             r.id,
+      fornecedorId:   r.fornecedorId,
+      produtoId:      r.produtoId,
+      date:           r.date,
+      status:         r.status,
+      fornecedorNome: r.fornecedor.nome,
+      produtoNome:    r.produto.produto,
+    }));
   }
 
   async update(r: Requisicao): Promise<void> {

@@ -1,5 +1,6 @@
 // src/domain/entities/Requisicao.ts
-export type RequisicaoStatus = 'PENDENTE' | 'CONFIRMADO' | 'CONCLUIDO';
+import { RequisicaoStatus as PrismaRequisicaoStatus } from '@prisma/client';
+export type RequisicaoStatus = PrismaRequisicaoStatus;
 
 export class Requisicao {
   constructor(

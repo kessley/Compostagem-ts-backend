@@ -55,6 +55,7 @@ router.post('/requisicoes',requisicaoController.create.bind(requisicaoController
 router.get('/requisicoes',requisicaoController.getAll.bind(requisicaoController));
 router.get('/requisicoes/:id',requisicaoController.get.bind(requisicaoController));
 router.put('/requisicoes/:id/confirmar',requisicaoController.confirmarColeta.bind(requisicaoController));
+router.put('/requisicoes/:id/recusar',requisicaoController.recusarRequisicao.bind(requisicaoController));
 router.delete('/requisicoes/:id',requisicaoController.delete.bind(requisicaoController));
 
 

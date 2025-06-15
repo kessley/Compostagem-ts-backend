@@ -61,6 +61,7 @@ enum RequisicaoStatus {
   PENDENTE
   CONFIRMADO
   CONCLUIDO
+  RECUSADO
 }
 
 model Requisicao {
